@@ -8,7 +8,7 @@ from .serializer import womanSerializer
 from .models import woman
 
 # Create your views here.
-@api_view(['FET'])
+@api_view(['GET'])
 def apiOverview(request):
   basicApi_urls = {
     'List':'/woman-list/',
@@ -19,7 +19,8 @@ def apiOverview(request):
   }
   return Response(basicApi_urls)
 
-def womanList(request):
-  women = women.objects.all()
+@api_view(['GET'])
+def womenList(request):
+  women = woman.objects.all()
   serializer = womanSerializer(women, many=True)
   return Response (serializer.data)

@@ -3,5 +3,5 @@ from .models import woman
 
 class womanSerializer(serializers.ModelSerializer):
   class Meta:
-    models = woman
+    model = woman
     fields = '__all__'
