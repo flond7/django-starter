@@ -22,5 +22,11 @@ def apiOverview(request):
 @api_view(['GET'])
 def womenList(request):
   women = woman.objects.all()
-  serializer = womanSerializer(women, many=True)
+  serializer = womanSerializer(women, many=True)  # many=true returns more objects
+  return Response (serializer.data)
+
+@api_view(['GET'])
+def womenDetail(request, pk):
+  women = woman.objects.get(id=pk)
+  serializer = womanSerializer(women, many=False) # many=false returns one object
   return Response (serializer.data)
