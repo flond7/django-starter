@@ -27,8 +27,29 @@ python manage.py createsuperuser
 http://127.0.0.1:8000/admin/
 
 # create new app
-python manage.py startapp app-name
+- cd into mainProject (aka mainProject parent folder)
+- python manage.py startapp app-name
+- add app-name to INSTALLED APPS in mainProject/mainProject/settings.py
+- add urls to urlpatterns in mainProject/mainProject/urls.py use include in the form of path('api/', include('api.urls'))
 
+# CREAT AN API
+- requires, model, serializer, view and a migration
+- *** IF NOT USING SQLite3 CREATE THE DATABASE HERE, BEFORE MAKING MIGRATIONS ***
+- crete a model (table structure) in mainProject/api/models.py
+- make a migration (to create the table) with: python manage.py makemigrations api
+  (it creates a mainProject/api/migrations/0001_initial.py file and eventually a mainProject/db.sqlite3 if not present)
+  to peak at the db see the section below
+  *** REMEMBER THAT WHEN YOU NEED TO UPDATE A MIGRATION (A DB) THE COMMMAND IS: python manage.py migrate ***
+- create a serializer (transform tables data in python dictionaries - objects) in mainProject/api/serializer.py
+- create a view in mainProject/api/viwes.py
+- remember to import the model and the serializer in the view
+- import the serializer and the model of the view you're creating
+
+python manage.py makemigrations
+
+## DB PEAKING
+- cd into mainProject and in a shell type command: python manage.py dbshell
+- >>> table (to see all tables)
 
 
 
@@ -91,6 +112,10 @@ git remote -v (check origin)
 git remote set-url origin https://github.com/USERNAME/REPOSITORY.git (change repository)
 
 
+
+## DJANGO REST FRAMEWORK
+- in the api app add models (one table one model) modifying mainProject/api/models.py
+- 
 
 
 
