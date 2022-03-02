@@ -45,8 +45,8 @@ http://127.0.0.1:8000/admin/
   it creates a table that has app-name_model-name (es: api_women)
 - create a serializer (transform tables data in python dictionaries - objects) in mainProject/api/serializer.py
 - create a view in mainProject/api/viwes.py
-- remember to import the model and the serializer in the view
-- import the serializer and the model of the view you're creating
+  remember to import the model and the serializer in the view
+- create an url path in mainProject/api/urls.py
 
 python manage.py makemigrations
 
