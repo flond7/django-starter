@@ -6,7 +6,9 @@
 c:
 cd C:\Users\PESSAE\Documents\webserver\django
 ## create virtual environment
-python -m venv name-virtual-environment
+- always create the virtual environment first and then the new django project (easier than conficuring a venv after project creation):
+  python -m venv name-virtual-environment
+
 ## activate venv
 C:\Users\PESSAE\Documents\webserver\django>name-virtual-environment\Scripts\activate
 ## make sure pip has the proxy
@@ -40,6 +42,7 @@ http://127.0.0.1:8000/admin/
   (it creates a mainProject/api/migrations/0001_initial.py file and eventually a mainProject/db.sqlite3 if not present)
   to peak at the db see the section below
   *** REMEMBER THAT WHEN YOU NEED TO UPDATE A MIGRATION (A DB) THE COMMMAND IS: python manage.py migrate ***
+  it creates a table that has app-name_model-name (es: api_women)
 - create a serializer (transform tables data in python dictionaries - objects) in mainProject/api/serializer.py
 - create a view in mainProject/api/viwes.py
 - remember to import the model and the serializer in the view
@@ -48,8 +51,13 @@ http://127.0.0.1:8000/admin/
 python manage.py makemigrations
 
 ## DB PEAKING
+- if it gives a CommandError: You appear not to have the 'sqlite3' program installed or on your path. copy the sql.exe file in the same folder as manage.py
+
 - cd into mainProject and in a shell type command: python manage.py dbshell
 - >>> table (to see all tables)
+- >>> .schema --indent table-name (see the stricture)
+- >>> select * from table-name
+https://realpython.com/django-migrations-a-primer/
 
 
 
