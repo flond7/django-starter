@@ -22,7 +22,7 @@ python mange.py runserver
 
 # create superuser
 python manage.py createsuperuser
-(administrator - administrator@localhost.com - muni05cipio
+(administrator - administrator@localhost.com - com04une)
 http://127.0.0.1:8000/admin/
 
 # CREATE A NEW APP
