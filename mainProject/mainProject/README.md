@@ -52,7 +52,7 @@ http://127.0.0.1:8000/admin/
 
 python manage.py makemigrations
 
-## DB PEAKING
+## DB PEAKING (SQLITE3)
 - if it gives a CommandError: You appear not to have the 'sqlite3' program installed or on your path. copy the sql.exe file in the same folder as manage.py
 
 - cd into mainProject and in a shell type command: python manage.py dbshell
@@ -60,6 +60,22 @@ python manage.py makemigrations
 - >>> .schema --indent table-name (see the stricture)
 - >>> select * from table-name
 https://realpython.com/django-migrations-a-primer/
+
+## DB MONGODB
+- Install djnongo using: 
+  pip install --proxy=http://proxy-bc-el.regione.fvg.it:801 djongo
+- install the right mongoengine
+  pip install --proxy=http://proxy-bc-el.regione.fvg.it:801 mongoengine
+- install the right pymongo versione (eventually remove if its >4.0)
+  pip install --proxy=http://proxy-bc-el.regione.fvg.it:801 pymongo==3.12.1 
+- makemigrations and then migrate to change to mongoDB:
+  python manage.py makemigrations
+  python manage.py migrate  
+
+*** WITH ERROR NotImplementedError: Database objects do not implement truth value testing or bool(). Please compare with None instead: database is not None ***
+- pymongo version might be wrong, use 3.12.1
+  pip uninstall pymongo
+  pip install --proxy=http://proxy-bc-el.regione.fvg.it:801 pymongo==3.12.1 
 
 
 
