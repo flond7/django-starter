@@ -19,9 +19,6 @@ class woman(models.Model):
   path = models.EmbeddedField(
     model_container=path,
   )
-  authors = models.ArrayField(
-    model_container=author,
-  )
   report = models.TextField()
 
   class Meta:
@@ -54,7 +51,6 @@ class appointment(models.Model):
     default = 'none',
   )
   report = models.TextField()
-  path_id = models.IntegerField()
 
   class Meta:
     ordering = ['appointmentDate']
@@ -62,26 +58,6 @@ class appointment(models.Model):
   def __str__(self):
     return self.title
 
-
-class path(models.Model):
-  STATUS_CHOICES = [
-        ('closed', 'Chiuso'),
-        ('ongoing', 'In corso'),
-  ]
-  start = models.DateTimeField()
-  end = models.DateTimeField()
-  status = models.CharField(
-    max_length = 2,
-    choices = STATUS_CHOICES,
-    default = 'ongoing',
-  )
-  report = models.TextField()
-
-  class Meta:
-    ordering = ['birthdate']
-
-  def __str__(self):
-    return self.title
 
 class author(models.Model):
   CITIZENSHIP_CHOICES = [
@@ -99,7 +75,32 @@ class author(models.Model):
   )
 
   class Meta:
-    ordering = ['birthdate']
+    ordering = ['name']
+
+  def __str__(self):
+    return self.title
+
+
+class path(models.Model):
+  STATUS_CHOICES = [
+        ('closed', 'Chiuso'),
+        ('ongoing', 'In corso'),
+  ]
+  start = models.DateTimeField()
+  end = models.DateTimeField()
+  status = models.CharField(
+    max_length = 2,
+    choices = STATUS_CHOICES,
+    default = 'ongoing',
+  )
+  authors = models.ArrayField(
+    model_container=author,
+  )
+  appointments = models.ArrayField(
+    model_container=appointment,
+  )
+  class Meta:
+    ordering = ['start']
 
   def __str__(self):
     return self.title
