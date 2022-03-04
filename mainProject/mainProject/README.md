@@ -1,20 +1,17 @@
 - Ricordarsi di aprire l'intera cartella django su VS
 - HDEAD: master
 
-# installa django in windows from cdm
-## cd into c
-c:
-cd C:\Users\PESSAE\Documents\webserver\django
-## create virtual environment
-- always create the virtual environment first and then the new django project (easier than conficuring a venv after project creation):
+# INSTALL DJANGO FROM CDM 
+- cd into c: (just tpe c:)
+- cd C:\Users\PESSAE\Documents\webserver\django
+- always create the **virtual environment** first and then the new django project (easier than conficuring a venv after project creation):
   python -m venv name-virtual-environment
-
-## activate venv
-C:\Users\PESSAE\Documents\webserver\django>name-virtual-environment\Scripts\activate
+- activate venv:
+  C:\Users\PESSAE\Documents\webserver\django>name-virtual-environment\Scripts\activate
 ## make sure pip has the proxy
 pip install --proxy=http://proxy-bc-el.regione.fvg.it:801 django
-
-django-admin startproject projectName  //creates the project folder 
+- create the project:
+  django-admin startproject projectName  //creates the project folder (es mainProject)
 
 # run server from cdm (inside project folder)
 python mange.py runserver
@@ -28,13 +25,18 @@ python manage.py createsuperuser
 (administrator - administrator@localhost.com - muni05cipio
 http://127.0.0.1:8000/admin/
 
-# create new app
+# CREATE A NEW APP
 - cd into mainProject (aka mainProject parent folder)
 - python manage.py startapp app-name
 - add app-name to INSTALLED APPS in mainProject/mainProject/settings.py
+  INSTALLED_APPS = [
+    'django.contrib.admin',
+    . . .
+    'app-name',
+  ]
 - add urls to urlpatterns in mainProject/mainProject/urls.py use include in the form of path('api/', include('api.urls'))
 
-# CREAT AN API
+# CREATE AN API
 - requires, model, serializer, view and a migration
 - *** IF NOT USING SQLite3 CREATE THE DATABASE HERE, BEFORE MAKING MIGRATIONS ***
 - crete a model (table structure) in mainProject/api/models.py
@@ -61,31 +63,23 @@ https://realpython.com/django-migrations-a-primer/
 
 
 
-### URL
-- In main project folder urls.py you can link the ursl.py of a specific app within the main project inside urlpatterns in the form
-
-    path('sample/', include('sample.urls'))
-
-- remember to have include imported at the top
-
-    from django.urls import path, include
-
-- Create a ursl.py within the app folder to specify urls for the subfolder (the urs will be ip/root-name-main-urls/root-name-app-urls) 
-
-    from django.urls import path
-    from . import views
-
-    urlpatterns = [
-        path('pageOne', views.pageOneFunction, name='pageOneName'),
-    ]
-
+## MANAGE URLS
+- In main project folder urls.py you can link the ursl.py of a specific app within the main project inside urlpatterns in the form:
+  path('sample/', include('sample.urls'))
+- remember to have include imported at the top:
+  from django.urls import path, include
+- Create a ursl.py within the app folder to specify urls for the subfolder (the urs will be ip/root-name-main-urls/root-name-app-urls) :
+  from django.urls import path
+  from . import views
+  urlpatterns = [
+    path('pageOne', views.pageOneFunction, name='pageOneName'),
+  ]
 - In settings.py in the main projects add the string with the app name to INSTALLED APPS
-
-    INSTALLED_APPS = [
-        'django.contrib.admin',
-        . . .
-        'sample',
-    ]
+  INSTALLED_APPS = [
+    'django.contrib.admin',
+    . . .
+    'sample',
+  ]
 
 
 
