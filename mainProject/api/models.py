@@ -2,32 +2,6 @@
 from djongo import models
 
 # Create your models here.
-class woman(models.Model):
-  CITIZENSHIP_CHOICES = [
-        ('IT', 'Italiana'),
-        ('ST', 'Straniera'),
-    ]
-  name = models.CharField(max_length=100, blank=True, default='')
-  surname = models.CharField(max_length=100, blank=True, default='')
-  birthdate = models.DateTimeField()
-  timestamp = models.DateTimeField(auto_now_add=True)
-  citizenship = models.CharField(
-    max_length = 2,
-    choices = CITIZENSHIP_CHOICES,
-    default = 'IT',
-  )
-  path = models.EmbeddedField(
-    model_container=path,
-  )
-  report = models.TextField()
-
-  class Meta:
-    ordering = ['birthdate']
-
-  def __str__(self):
-    return self.title
-
-
 class appointment(models.Model):
   ATTENDING_CHOICES = [
         ('none', ''),
@@ -54,28 +28,21 @@ class appointment(models.Model):
 
   class Meta:
     ordering = ['appointmentDate']
+    abstract = True
 
   def __str__(self):
     return self.title
 
 
 class author(models.Model):
-  CITIZENSHIP_CHOICES = [
-        ('IT', 'Italiana'),
-        ('ST', 'Straniera'),
-    ]
   name = models.CharField(max_length=100, blank=True, default='')
   surname = models.CharField(max_length=100, blank=True, default='')
-  birthdate = models.DateTimeField()
+  yearsOld = models.IntegerField()
   timestamp = models.DateTimeField(auto_now_add=True)
-  citizenship = models.CharField(
-    max_length = 2,
-    choices = CITIZENSHIP_CHOICES,
-    default = 'IT',
-  )
 
   class Meta:
     ordering = ['name']
+    abstract = True
 
   def __str__(self):
     return self.title
@@ -101,6 +68,33 @@ class path(models.Model):
   )
   class Meta:
     ordering = ['start']
+    abstract = True
+
+  def __str__(self):
+    return self.title
+
+
+class woman(models.Model):
+  CITIZENSHIP_CHOICES = [
+        ('IT', 'Italiana'),
+        ('ST', 'Straniera'),
+    ]
+  name = models.CharField(max_length=100, blank=True, default='')
+  surname = models.CharField(max_length=100, blank=True, default='')
+  birthdate = models.DateTimeField()
+  timestamp = models.DateTimeField(auto_now_add=True)
+  citizenship = models.CharField(
+    max_length = 2,
+    choices = CITIZENSHIP_CHOICES,
+    default = 'IT',
+  )
+  path = models.EmbeddedField(
+    model_container=path,
+  )
+  report = models.TextField()
+
+  class Meta:
+    ordering = ['birthdate']
 
   def __str__(self):
     return self.title

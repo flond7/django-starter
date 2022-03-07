@@ -76,7 +76,9 @@ https://realpython.com/django-migrations-a-primer/
 - pymongo version might be wrong, use 3.12.1
   pip uninstall pymongo
   pip install --proxy=http://proxy-bc-el.regione.fvg.it:801 pymongo==3.12.1 
-
+*** WITH ERROR cannot be of type "<class \'django.db.models.fields.BigAutoField\'>" ***
+- you need to add abstract = True to the Meta class, wich means that djongo won't create a new "table" for the model
+  
 
 
 ## MANAGE URLS
