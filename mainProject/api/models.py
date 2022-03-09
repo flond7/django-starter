@@ -1,62 +1,74 @@
 # from django.db import models
 from djongo import models
+from django import forms
 
 # Create your models here.
 class appointment(models.Model):
-  ATTENDING_CHOICES = [
-        ('none', ''),
-        ('p1', 'Person One'),
-        ('p2', 'Person Two'),
+  PERSON_CHOICES = [
+        ('p1', 'Person 1'),
+        ('p2', 'Person 2'),
   ]
-  PLACE_CHOICE = [
-        ('none', ''),
-        ('p1', 'Place One'),
-        ('p2', 'Place Two'),
+  PLACE_CHOICES = [
+        ('p1', 'Place 1'),
+        ('p2', 'Place 2'),
   ]
-  appointmentDate = models.DateTimeField()
-  appointmentPlace = models.CharField(
+  APPOINTMENT_TYPE_CHOICES = [
+        ('t1', 'Type 1'),
+        ('t2', 'Type 2'),
+  ]
+  _id = models.ObjectIdField()
+  appointmentPlace  = models.CharField(
     max_length = 2,
-    choices = PLACE_CHOICE,
-    default = 'none',
+    choices = PLACE_CHOICES,
+    default = 'p1',
   )
-  status = models.CharField(
+  appointmentDay = models.DateTimeField()
+  personOne = models.CharField(
     max_length = 2,
-    choices = ATTENDING_CHOICES,
-    default = 'none',
+    choices = PERSON_CHOICES,
+    default = 'p1',
+  )
+  personTwo = models.CharField(
+    max_length = 2,
+    choices = PERSON_CHOICES,
+    default = 'p1',
+  )
+  type = models.CharField(
+    max_length = 2,
+    choices = APPOINTMENT_TYPE_CHOICES,
+    default = 't1',
   )
   report = models.TextField()
 
   class Meta:
-    ordering = ['appointmentDate']
-    abstract = True
+    ordering = ['appointmentDay']
 
   def __str__(self):
     return self.title
 
-
 class author(models.Model):
+  _id = models.ObjectIdField()
   name = models.CharField(max_length=100, blank=True, default='')
   surname = models.CharField(max_length=100, blank=True, default='')
   yearsOld = models.IntegerField()
-  timestamp = models.DateTimeField(auto_now_add=True)
 
   class Meta:
     ordering = ['name']
-    abstract = True
+    #abstract = True
 
   def __str__(self):
     return self.title
-
 
 class path(models.Model):
   STATUS_CHOICES = [
         ('closed', 'Chiuso'),
         ('ongoing', 'In corso'),
   ]
+  _id = models.ObjectIdField()
   start = models.DateTimeField()
   end = models.DateTimeField()
   status = models.CharField(
-    max_length = 2,
+    max_length = 7,
     choices = STATUS_CHOICES,
     default = 'ongoing',
   )
@@ -66,13 +78,14 @@ class path(models.Model):
   appointments = models.ArrayField(
     model_container=appointment,
   )
+  
+  
   class Meta:
     ordering = ['start']
-    abstract = True
+    #abstract = True
 
   def __str__(self):
     return self.title
-
 
 class woman(models.Model):
   CITIZENSHIP_CHOICES = [
@@ -89,8 +102,9 @@ class woman(models.Model):
     default = 'IT',
   )
   path = models.EmbeddedField(
-    model_container=path,
+    model_container=path
   )
+
   report = models.TextField()
 
   class Meta:
