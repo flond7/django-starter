@@ -77,8 +77,21 @@ https://realpython.com/django-migrations-a-primer/
   pip uninstall pymongo
   pip install --proxy=http://proxy-bc-el.regione.fvg.it:801 pymongo==3.12.1 
 *** WITH ERROR cannot be of type "<class \'django.db.models.fields.BigAutoField\'>" ***
-- you need to add abstract = True to the Meta class, wich means that djongo won't create a new "table" for the model
+- If it's a mega object with nested objects defined as models, remember to add abstract = True to the Meta class, wich means that djongo won't create a new "table" for the model just include the field where you embedded them
+- it's best to reset the DB and migrate again by
+  -- in migration folder KEEP __init__.py and delete all the other files 
+  -- python manage.py makepigrations
+  -- python manage.py migrate
+
+
+## MODELS SPECIFICS
+To use constants for models, 
+- Create a separate file (es modelsConstat)
+- Import it on the main models in the form of: from my-app-name.modelConstants import *
   
+
+reset DB
+https://dev.to/rawas_aditya/how-to-reset-django-migrations-169o
 
 
 ## MANAGE URLS
