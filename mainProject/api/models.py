@@ -1,10 +1,11 @@
 # from django.db import models
 from djongo import models
 from django import forms
+from api.modelsConstants import *
 
 # Create your models here.
 class appointment(models.Model):
-  PERSON_CHOICES = [
+  """ PERSON_CHOICES = [
         ('p1', 'Person 1'),
         ('p2', 'Person 2'),
   ]
@@ -16,6 +17,7 @@ class appointment(models.Model):
         ('t1', 'Type 1'),
         ('t2', 'Type 2'),
   ]
+   """
   _id = models.ObjectIdField()
   appointmentPlace  = models.CharField(
     max_length = 2,
@@ -60,10 +62,10 @@ class author(models.Model):
     return self.title
 
 class path(models.Model):
-  STATUS_CHOICES = [
+  """ STATUS_CHOICES = [
         ('closed', 'Chiuso'),
         ('ongoing', 'In corso'),
-  ]
+  ] """
   _id = models.ObjectIdField()
   start = models.DateTimeField()
   end = models.DateTimeField()
