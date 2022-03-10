@@ -1,11 +1,15 @@
+from importlib.resources import path
 from django.http import JsonResponse
 from django.shortcuts import render
 
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+
+
 from .serializer import womanSerializer
 from .models import woman
+
 
 # Create your views here.
 @api_view(['GET'])
@@ -51,3 +55,19 @@ def womanDelete(request, pk):
   w = woman.objects.get(id=pk)
   w.delete()
   return Response ("Item deleted")
+
+
+#DJONGO API
+@api_view(['GET'])
+def womanOpenPaths(request):
+  w = woman.objects.filter(name='w2')
+  serializer = womanSerializer(w, many=True)  # many=true returns more objects
+  filteredList = []
+  for w in serializer.data:
+    if w["citizenship"] == "IT":
+      filteredList.append(w)
+  return Response (filteredList)
+
+
+""" there is still the problem that path doesn't look like an object for the inserted women"""
+

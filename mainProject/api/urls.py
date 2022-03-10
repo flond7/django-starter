@@ -7,4 +7,5 @@ urlpatterns = [
   path('woman-create', views.womanCreate, name="woman-create"),
   path('woman-update/<str:pk>', views.womanUpdate, name="woman-update"),
   path('woman-delete/<str:pk>', views.womanDelete, name="woman-delete"),
+  path('woman-open-paths', views.womanOpenPaths, name="woman-open-paths")
 ]
