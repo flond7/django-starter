@@ -5,19 +5,6 @@ from api.modelsConstants import *
 
 # Create your models here.
 class appointment(models.Model):
-  """ PERSON_CHOICES = [
-        ('p1', 'Person 1'),
-        ('p2', 'Person 2'),
-  ]
-  PLACE_CHOICES = [
-        ('p1', 'Place 1'),
-        ('p2', 'Place 2'),
-  ]
-  APPOINTMENT_TYPE_CHOICES = [
-        ('t1', 'Type 1'),
-        ('t2', 'Type 2'),
-  ]
-   """
   _id = models.ObjectIdField()
   appointmentPlace  = models.CharField(
     max_length = 2,
@@ -35,6 +22,8 @@ class appointment(models.Model):
     choices = PERSON_CHOICES,
     default = 'p1',
   )
+  volunteer = models.CharField(max_length=100, blank=True, default='')
+  durationTime = models.DurationField()
   type = models.CharField(
     max_length = 2,
     choices = APPOINTMENT_TYPE_CHOICES,
@@ -53,25 +42,35 @@ class author(models.Model):
   name = models.CharField(max_length=100, blank=True, default='')
   surname = models.CharField(max_length=100, blank=True, default='')
   yearsOld = models.IntegerField()
+  education = models.CharField(
+    max_length = 7,
+    choices = AUTHOR_EDUCATION_CHOICES,
+    default = 'e0',
+  )
+  job = models.CharField(
+    max_length = 7,
+    choices = AUTHOR_JOB_CHOICES,
+    default = 'j0',
+  )
+  relationship = models.CharField(
+    max_length = 7,
+    choices = AUTHOR_RELATIONSHIP_CHOICES,
+    default = 'r0',
+  )
 
   class Meta:
     ordering = ['name']
-    #abstract = True
 
   def __str__(self):
     return self.title
 
 class path(models.Model):
-  """ STATUS_CHOICES = [
-        ('closed', 'Chiuso'),
-        ('ongoing', 'In corso'),
-  ] """
   _id = models.ObjectIdField()
   start = models.DateTimeField()
   end = models.DateTimeField()
   status = models.CharField(
     max_length = 7,
-    choices = STATUS_CHOICES,
+    choices = PATH_STATUS_CHOICES,
     default = 'ongoing',
   )
   authors = models.ArrayField(
@@ -81,19 +80,13 @@ class path(models.Model):
     model_container=appointment,
   )
   
-  
   class Meta:
     ordering = ['start']
-    #abstract = True
 
   def __str__(self):
     return self.title
 
 class woman(models.Model):
-  CITIZENSHIP_CHOICES = [
-        ('IT', 'Italiana'),
-        ('ST', 'Straniera'),
-    ]
   name = models.CharField(max_length=100, blank=True, default='')
   surname = models.CharField(max_length=100, blank=True, default='')
   birthdate = models.DateTimeField()
