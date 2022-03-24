@@ -40,17 +40,25 @@ http://127.0.0.1:8000/admin/
 - requires, model, serializer, view and a migration
 - *** IF NOT USING SQLite3 CREATE THE DATABASE HERE, BEFORE MAKING MIGRATIONS ***
 - crete a model (table structure) in mainProject/api/models.py
+  -- adding blank=True in the model type makes it not required (es: models.EmailField(blank=True))
 - make a migration (to create the table) with: python manage.py makemigrations api
   (it creates a mainProject/api/migrations/0001_initial.py file and eventually a mainProject/db.sqlite3 if not present)
   to peak at the db see the section below
   *** REMEMBER THAT WHEN YOU NEED TO UPDATE A MIGRATION (A DB) THE COMMMAND IS: python manage.py migrate ***
   it creates a table that has app-name_model-name (es: api_women)
 - create a serializer (transform tables data in python dictionaries - objects) in mainProject/api/serializer.py
+  -- serialization is the process of converting a Model to JSON and allows to specify what fields should be present in the JSON representation of the model (so I can drop the _id autoGenereted and use a custom id)
+  -- here you can set up custom validatiors and say if a field is required or not
 - create a view in mainProject/api/viwes.py
   remember to import the model and the serializer in the view
 - create an url path in mainProject/api/urls.py
 
 python manage.py makemigrations
+
+## ADD A NEW FILED TO DB
+- add it in the model
+- add it in the serializer
+- make migration, migrate
 
 ## DB PEAKING (SQLITE3)
 - if it gives a CommandError: You appear not to have the 'sqlite3' program installed or on your path. copy the sql.exe file in the same folder as manage.py
@@ -72,10 +80,14 @@ https://realpython.com/django-migrations-a-primer/
   python manage.py makemigrations
   python manage.py migrate  
 
+*** NESTED MODELS ***
+- add _id = models.ObjectIdField() to the model fields of the nested model in order to have nested models
+
 *** WITH ERROR NotImplementedError: Database objects do not implement truth value testing or bool(). Please compare with None instead: database is not None ***
 - pymongo version might be wrong, use 3.12.1
   pip uninstall pymongo
   pip install --proxy=http://proxy-bc-el.regione.fvg.it:801 pymongo==3.12.1 
+
 *** WITH ERROR cannot be of type "<class \'django.db.models.fields.BigAutoField\'>" ***
 - If it's a mega object with nested objects defined as models, remember to add abstract = True to the Meta class, wich means that djongo won't create a new "table" for the model just include the field where you embedded them
 - it's best to reset the DB and migrate again by
